@@ -1,0 +1,60 @@
+capabilities:
+  - id: ticket_quality
+    domain: SERVICENOW
+    tools: [assess_ticket_quality]
+    approval_required: false
+    risk_level: read_only
+
+  - id: similar_incidents
+    domain: SERVICENOW
+    tools: [find_similar_incidents, find_related_problem]
+    approval_required: false
+    risk_level: read_only
+
+  - id: resolve_ticket
+    domain: SERVICENOW
+    tools: [resolve_ticket, update_ticket_fields]
+    approval_required: true
+    risk_level: write
+
+  - id: job_investigation
+    domain: MAINFRAME
+    tools: [savrs_job_spool, read_jcl, read_source, esp_job_history]
+    approval_required: false
+    risk_level: read_only
+
+  - id: submit_jcl
+    domain: MAINFRAME
+    tools: [submit_jcl]
+    approval_required: true
+    risk_level: write
+
+  - id: log_search
+    domain: NEWRELIC
+    tools: [search_nr_logs, get_nr_app_errors]
+    approval_required: false
+    risk_level: read_only
+
+  - id: cobol_explain
+    domain: CODE
+    tools: [explain_cobol, explain_jcl, optimize_advice]
+    approval_required: false
+    risk_level: read_only
+
+  - id: dq_profile
+    domain: DQ
+    tools: [profile_dataset, score_dimensions, clean_ticket_fields]
+    approval_required: false
+    risk_level: read_only
+
+  - id: remediation_playbook
+    domain: REMEDIATE
+    tools: [suggest_fix, run_playbook]
+    approval_required: true
+    risk_level: write
+
+  - id: health_verify
+    domain: VALIDATE
+    tools: [health_check]
+    approval_required: false
+    risk_level: read_only

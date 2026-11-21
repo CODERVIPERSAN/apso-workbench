@@ -1,0 +1,18 @@
+[
+  {
+    "id": "AUTO-RESTART-JOBCUST01",
+    "name": "Restart JOBCUST01 with PK Chunking disabled",
+    "description": "Submits JCL with PKCHUNK=N then monitors spool for CC 0000",
+    "risk_level": "high",
+    "approval_required": true,
+    "tools": ["mainframe.submit_jcl", "mainframe.get_job_spool"]
+  },
+  {
+    "id": "AUTO-DQ-REPROFILE",
+    "name": "Re-profile CUSTOMER_MASTER",
+    "description": "Runs Informatica DQ profile job JOBDQPROF",
+    "risk_level": "medium",
+    "approval_required": false,
+    "tools": ["informatica_dq.profile", "mainframe.submit_jcl"]
+  }
+]

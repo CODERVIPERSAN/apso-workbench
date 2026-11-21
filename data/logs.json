@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": "2026-11-20T22:14:10Z",
+    "source": "JOBCUST01.EXTRACT",
+    "level": "ERROR",
+    "message": "ABEND U4038 during INFAPK call — PK Chunking key collision",
+    "codes": ["U4038", "PK_CHUNK"],
+    "job_name": "JOBCUST01"
+  },
+  {
+    "timestamp": "2026-11-20T22:14:20Z",
+    "source": "JOBCUST01.EXTRACT",
+    "level": "ERROR",
+    "message": "IEA995I SYMPTOM DUMP OUTPUT — ABEND code U4038",
+    "codes": ["U4038", "IEA995I"],
+    "job_name": "JOBCUST01"
+  },
+  {
+    "timestamp": "2026-11-20T22:14:25Z",
+    "source": "JOBCUST01.EXTRACT",
+    "level": "WARN",
+    "message": "PK Chunking session terminated; recommend PKCHUNK=N and full extract per SOP-BATCH-PKCHUNK-001",
+    "codes": ["PK_CHUNK"],
+    "job_name": "JOBCUST01"
+  },
+  {
+    "timestamp": "2026-11-20T22:14:30Z",
+    "source": "JOBCUST01",
+    "level": "ERROR",
+    "message": "IEF450I JOBCUST01 EXTRACT - ABEND=S0C7 U4038 REASON=00000000",
+    "codes": ["S0C7", "U4038", "IEF450I"],
+    "job_name": "JOBCUST01"
+  },
+  {
+    "timestamp": "2026-11-21T08:02:00Z",
+    "source": "CICSPROD1",
+    "level": "WARN",
+    "message": "Transaction TRN-PAY P95=2100ms DB2 wait detected",
+    "codes": ["DB2WAIT"],
+    "job_name": null
+  },
+  {
+    "timestamp": "2026-11-19T13:25:00Z",
+    "source": "JOBDQPROF",
+    "level": "WARN",
+    "message": "DQ rule DQ-CUST-002 failed completeness score=0.91 threshold=0.95",
+    "codes": ["DQ_FAIL"],
+    "job_name": "JOBDQPROF"
+  }
+]

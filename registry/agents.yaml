@@ -1,0 +1,57 @@
+agents:
+  - name: orchestrator
+    status: ACTIVE
+    stage: core
+    description: Assigns work and tracks the case
+  - name: paige
+    status: ACTIVE
+    stage: intake
+    description: Initial AI triage — urgent vs less urgent
+  - name: data_quality
+    status: ACTIVE
+    stage: intake
+    description: Cleans ticket details / DQ scoring
+  - name: triage
+    status: ACTIVE
+    stage: diagnose
+    description: First look at the issue
+  - name: impact
+    status: ACTIVE
+    stage: diagnose
+    description: How bad is it
+  - name: log_analysis
+    status: ACTIVE
+    stage: diagnose
+    description: Reads New Relic / system logs
+  - name: change_analyzer
+    status: ACTIVE
+    stage: diagnose
+    description: What changed lately
+  - name: code_analyzer
+    status: ACTIVE
+    stage: diagnose
+    description: COBOL/JCL code intelligence
+  - name: mainframe
+    status: ACTIVE
+    stage: diagnose
+    description: Spool / JCL / ESP operations
+  - name: resolution
+    status: ACTIVE
+    stage: resolve
+    description: Suggests the fix
+  - name: self_healing
+    status: ACTIVE
+    stage: resolve
+    description: Runs approved fix (HITL)
+  - name: health_check
+    status: ACTIVE
+    stage: verify
+    description: Confirms healthy
+  - name: closure
+    status: ACTIVE
+    stage: close
+    description: Ticket resolve + problem record
+  - name: knowledge
+    status: STOPPED
+    stage: cross_cutting
+    description: Knowledge Agent — STOPPED

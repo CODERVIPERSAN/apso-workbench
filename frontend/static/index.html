@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APSO — Agent Workbench</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="workbench">
+    <!-- Cursor-style activity bar -->
+    <nav class="activity">
+      <button class="act active" data-panel="chat" title="Agent">✦</button>
+      <button class="act" data-panel="agents" title="Agents">◉</button>
+      <button class="act" data-panel="incidents" title="Incidents">⚠</button>
+      <button class="act" data-panel="knowledge" title="Knowledge">☰</button>
+      <button class="act" data-panel="gov" title="Governance">🛡</button>
+      <div class="act-spacer"></div>
+      <button class="act" id="btn-settings" title="Settings">⚙</button>
+    </nav>
+
+    <!-- Cursor-style sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="side-head">
+        <div class="product">APSO</div>
+        <div class="product-sub">Agent workbench</div>
+      </div>
+      <button class="new-chat" id="btn-new">＋ New Agent</button>
+      <div class="side-section" id="side-chat">
+        <div class="side-label">THREADS</div>
+        <div class="thread active" data-t="main">INC5668817 · PK Chunking</div>
+        <div class="thread" data-t="ask">Ask · general</div>
+      </div>
+      <div class="side-section hidden" id="side-agents">
+        <div class="side-label">SPECIALIST AGENTS</div>
+        <div id="agent-list"></div>
+      </div>
+      <div class="side-section hidden" id="side-incidents">
+        <div class="side-label">INCIDENTS</div>
+        <div id="inc-list"></div>
+      </div>
+      <div class="side-foot">
+        <div id="llm-pill">Model …</div>
+        <div class="user-mini">JP · L3 HITL</div>
+      </div>
+    </aside>
+
+    <!-- Main agent panel (Cursor Agent) -->
+    <main class="agent-panel">
+      <header class="panel-top">
+        <div class="modes" id="modes">
+          <button class="mode" data-mode="ask">Ask</button>
+          <button class="mode active" data-mode="agent">Agent</button>
+          <button class="mode" data-mode="plan">Plan</button>
+        </div>
+        <div class="panel-meta" id="panel-meta">Agent · multi-agent swarm</div>
+        <div class="kpis" id="kpis"></div>
+      </header>
+
+      <div class="transcript" id="transcript">
+        <div class="empty">
+          <h1>APSO Agent</h1>
+          <p>Cursor-style workbench for your ops multi-agent system.</p>
+          <ul>
+            <li><b>Ask</b> — read-only Q&amp;A (no swarm)</li>
+            <li><b>Agent</b> — orchestrator dispatches specialist agents</li>
+            <li><b>Plan</b> — show agent plan without executing writes</li>
+          </ul>
+          <p class="hint">Try: <code>Investigate INC5668817</code></p>
+        </div>
+      </div>
+
+      <div class="hitl hidden" id="hitl">
+        <span id="hitl-msg">Checkpoint — HITL approval required before Apply</span>
+        <button id="hitl-apply">Accept</button>
+        <button id="hitl-reject" class="ghost">Reject</button>
+      </div>
+
+      <!-- Cursor-style composer -->
+      <div class="composer">
+        <div class="composer-box">
+          <textarea id="prompt" rows="2" placeholder="Plan, search, ask anything…  @INC5668817 Investigate"></textarea>
+          <div class="composer-bar">
+            <span class="mode-tag" id="mode-tag">Agent</span>
+            <span class="ctx-tag" id="ctx-tag">context: ops</span>
+            <button id="send" class="send">↑</button>
+          </div>
+        </div>
+        <div class="composer-hint">Enter to send · Shift+Enter newline · Agent runs swarm only on Investigate INC…</div>
+      </div>
+    </main>
+
+    <!-- Context panel (like Cursor context / review) -->
+    <aside class="context" id="context">
+      <div class="ctx-h">Context</div>
+      <div class="ctx-block">
+        <div class="ctx-label">Connectors</div>
+        <div id="connectors">…</div>
+      </div>
+      <div class="ctx-block">
+        <div class="ctx-label">Active agents</div>
+        <div id="live-agents">Idle</div>
+      </div>
+      <div class="ctx-block">
+        <div class="ctx-label">Tool trail</div>
+        <div id="tool-trail" class="mono"></div>
+      </div>
+      <div class="ctx-block">
+        <div class="ctx-label">Governance</div>
+        <button id="btn-kill" class="ghost wide">Kill-switch</button>
+        <button id="btn-unkill" class="ghost wide">Release</button>
+      </div>
+    </aside>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+{
+  "incidents": [
+    {
+      "number": "INC5668817",
+      "sys_id": "sn-5668817",
+      "short_description": "Batch job PAYROLL01 failed — PK Chunking error",
+      "description": "Overnight payroll extract failed with PK Chunking timeout. Job abended after step EXTRACT. Assignment group: Batch-Ops. CI: PAYROLL01.",
+      "priority": "2",
+      "state": "In Progress",
+      "assignment_group": "Batch-Ops",
+      "ci": "PAYROLL01",
+      "value_stream": "SEVS",
+      "opened_at": "2026-11-21T01:12:00Z",
+      "caller": "batch.monitor",
+      "work_notes": "",
+      "close_notes": "",
+      "quality_score": null
+    },
+    {
+      "number": "INC5668801",
+      "sys_id": "sn-5668801",
+      "short_description": "CICS region TOR1 high CPU",
+      "description": "TOR1 CPU above 90% for 15 minutes.",
+      "priority": "1",
+      "state": "New",
+      "assignment_group": "Mainframe-Ops",
+      "ci": "CICS-TOR1",
+      "value_stream": "PSVS",
+      "opened_at": "2026-11-21T00:40:00Z",
+      "caller": "nr.alert",
+      "work_notes": "",
+      "close_notes": "",
+      "quality_score": null
+    },
+    {
+      "number": "INC5668790",
+      "sys_id": "sn-5668790",
+      "short_description": "DQ rule fail on CUSTOMER_MASTER completeness",
+      "description": "Informatica-style completeness rule dropped below 95%.",
+      "priority": "3",
+      "state": "New",
+      "assignment_group": "Data-Quality",
+      "ci": "CUSTOMER_MASTER",
+      "value_stream": "FPVS",
+      "opened_at": "2026-11-20T22:10:00Z",
+      "caller": "dq.monitor",
+      "work_notes": "",
+      "close_notes": "",
+      "quality_score": null
+    }
+  ],
+  "problems": [],
+  "jobs": {
+    "PAYROLL01": {
+      "last_status": "ABEND",
+      "abend": "S322",
+      "step": "EXTRACT",
+      "message": "PK Chunking timeout — large table scan exceeded limit",
+      "last_run": "2026-11-21T01:05:00Z",
+      "scheduler": "ESP"
+    },
+    "GLPOST02": {
+      "last_status": "CC 0000",
+      "abend": null,
+      "step": "POST",
+      "message": "Completed normally",
+      "last_run": "2026-11-21T00:55:00Z",
+      "scheduler": "ESP"
+    }
+  },
+  "jcl": {
+    "PAYROLL01": "//PAYROLL01 JOB (ACCT),'PAYROLL EXTRACT',CLASS=A,MSGCLASS=X\n//EXTRACT  EXEC PGM=IKJEFT01,REGION=0M\n//* PK Chunking enabled — disable via PKCHUNK=N per SOP-BATCH-014\n//SYSTSIN  DD *\n  DSN SYSTEM(DB2P)\n  RUN PROGRAM(PAYEXT) PLAN(PAYEXT) PARMS('PKCHUNK=Y,SIZE=50000')\n/*\n"
+  },
+  "cobol": {
+    "PAYEXT": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. PAYEXT.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01  WS-PKCHUNK        PIC X VALUE 'Y'.\n       01  WS-CHUNK-SIZE     PIC 9(5) VALUE 50000.\n       PROCEDURE DIVISION.\n           IF WS-PKCHUNK = 'Y'\n              PERFORM EXTRACT-WITH-CHUNK\n           ELSE\n              PERFORM EXTRACT-FULL\n           END-IF.\n           GOBACK.\n"
+  },
+  "sops": [
+    {
+      "id": "SOP-BATCH-014",
+      "title": "PK Chunking failure recovery",
+      "body": "If batch job fails with PK Chunking timeout: 1) Set PKCHUNK=N in JCL PARMS 2) Re-submit job 3) Verify CC 0000 4) Restore PKCHUNK=Y for next cycle. HITL required before submit."
+    },
+    {
+      "id": "SOP-MF-001",
+      "title": "ABEND S322 investigation",
+      "body": "S322 indicates CPU time exceeded. Check looping COBOL, region size, and recent changes."
+    }
+  ],
+  "dq_rules": [
+    {
+      "id": "DQ-COMP-001",
+      "dataset": "CUSTOMER_MASTER",
+      "dimension": "completeness",
+      "threshold": 0.95,
+      "current": 0.91,
+      "status": "fail"
+    },
+    {
+      "id": "DQ-UNIQ-002",
+      "dataset": "CUSTOMER_MASTER",
+      "dimension": "uniqueness",
+      "threshold": 1.0,
+      "current": 0.998,
+      "status": "warn"
+    },
+    {
+      "id": "DQ-TICKET-FIELDS",
+      "dataset": "incident",
+      "dimension": "conformity",
+      "threshold": 0.9,
+      "current": null,
+      "status": "dynamic"
+    }
+  ],
+  "nr_logs": [
+    {
+      "timestamp": "2026-11-21T01:04:55Z",
+      "app": "payroll-batch",
+      "level": "ERROR",
+      "message": "PK Chunking timeout on table PAY.EXTRACT_SRC size=50000"
+    },
+    {
+      "timestamp": "2026-11-21T01:05:01Z",
+      "app": "payroll-batch",
+      "level": "ERROR",
+      "message": "Job PAYROLL01 step EXTRACT ABEND S322"
+    },
+    {
+      "timestamp": "2026-11-21T00:38:00Z",
+      "app": "cics-tor1",
+      "level": "WARN",
+      "message": "CPU utilization 92%"
+    }
+  ],
+  "playbooks": [
+    {
+      "id": "PB-PKCHUNK",
+      "title": "Disable PK Chunking and rerun",
+      "steps": ["Update JCL PKCHUNK=N", "Submit JCL", "Verify spool CC 0000", "Update incident"],
+      "hitl": true
+    }
+  ]
+}

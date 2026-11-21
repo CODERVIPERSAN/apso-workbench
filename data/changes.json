@@ -1,0 +1,20 @@
+[
+  {
+    "number": "CHG0033100",
+    "summary": "Increased Informatica PK chunk size from 25k to 50k for CUSTEXT",
+    "service": "JOBCUST01",
+    "implemented_at": "2026-11-18T02:00:00Z",
+    "state": "Closed",
+    "risk": "moderate",
+    "related_incidents": ["INC5668817"]
+  },
+  {
+    "number": "CHG0033088",
+    "summary": "CICS PAYFILE LSR pool tuning",
+    "service": "CICSPROD1",
+    "implemented_at": "2026-11-10T01:00:00Z",
+    "state": "Closed",
+    "risk": "low",
+    "related_incidents": []
+  }
+]

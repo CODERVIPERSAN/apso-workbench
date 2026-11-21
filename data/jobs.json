@@ -1,0 +1,58 @@
+[
+  {
+    "job_name": "JOBCUST01",
+    "job_id": "JOB12345",
+    "owner": "BATCHUSR",
+    "class": "A",
+    "status": "ABEND",
+    "return_code": "S0C7",
+    "submit_time": "2026-11-20T22:00:00Z",
+    "end_time": "2026-11-20T22:14:32Z",
+    "system": "SYSA",
+    "steps": [
+      {"step": "ALLOC", "rc": "00", "elapsed_sec": 12},
+      {"step": "EXTRACT", "rc": "12", "elapsed_sec": 840, "abend": "U4038"},
+      {"step": "LOAD", "rc": "FLUSH", "elapsed_sec": 0}
+    ],
+    "jcl_member": "JOBCUST01",
+    "cobol_programs": ["CUSTEXT"],
+    "esp_application": "CUST.NIGHTLY",
+    "notes": "Failed during PK Chunking extract step."
+  },
+  {
+    "job_name": "JOBACCT02",
+    "job_id": "JOB09876",
+    "owner": "BATCHUSR",
+    "class": "B",
+    "status": "CC 0000",
+    "return_code": "00",
+    "submit_time": "2026-11-20T23:00:00Z",
+    "end_time": "2026-11-20T23:45:00Z",
+    "system": "SYSA",
+    "steps": [
+      {"step": "STEP01", "rc": "00", "elapsed_sec": 2700}
+    ],
+    "jcl_member": "JOBACCT02",
+    "cobol_programs": [],
+    "esp_application": "ACCT.NIGHTLY",
+    "notes": "Completed normally."
+  },
+  {
+    "job_name": "JOBDQPROF",
+    "job_id": "JOB05555",
+    "owner": "DQUSR",
+    "class": "C",
+    "status": "CC 0004",
+    "return_code": "04",
+    "submit_time": "2026-11-19T13:00:00Z",
+    "end_time": "2026-11-19T13:30:00Z",
+    "system": "SYSB",
+    "steps": [
+      {"step": "PROFILE", "rc": "04", "elapsed_sec": 1800}
+    ],
+    "jcl_member": "JOBDQPROF",
+    "cobol_programs": [],
+    "esp_application": "DQ.DAILY",
+    "notes": "Warnings on null rate for SSN field."
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "SOP-BATCH-PKCHUNK-001",
+    "title": "PK Chunking Batch Failure Recovery",
+    "category": "batch",
+    "applies_to": ["JOBCUST01", "pk_chunking", "INC5668817"],
+    "severity": [
+      "Confirm ABEND/U4038 or RC=12 on EXTRACT step in job spool.",
+      "Assess ticket quality and search for similar incidents / related problems.",
+      "Disable PK Chunking in JCL SYSIN (set PKCHUNK=N) per change control.",
+      "Re-run JOBCUST01 in full-extract mode.",
+      "Validate DQ uniqueness and timeliness on CUST_EXTRACT_STAGING.",
+      "Resolve incident with work note referencing this SOP; HITL required for ServiceNow write."
+    ],
+    "risk": "medium",
+    "automation_id": "AUTO-RESTART-JOBCUST01"
+  },
+  {
+    "id": "SOP-CICS-LAT-001",
+    "title": "CICS Latency Triage",
+    "category": "online",
+    "applies_to": ["CICSPROD1", "latency"],
+    "steps": [
+      "Check CICS region statistics and DB2 thread waits.",
+      "Correlate with recent changes.",
+      "If -904, apply known problem workaround."
+    ],
+    "risk": "low",
+    "automation_id": null
+  },
+  {
+    "id": "SOP-DQ-COMP-001",
+    "title": "DQ Completeness Breach",
+    "category": "data_quality",
+    "applies_to": ["CUSTOMER_MASTER", "completeness"],
+    "steps": [
+      "Re-profile CUSTOMER_MASTER.",
+      "Identify failing fields.",
+      "Open/link problem if recurring source issue."
+    ],
+    "risk": "low",
+    "automation_id": null
+  }
+]

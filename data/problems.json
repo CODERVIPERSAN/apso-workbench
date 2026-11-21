@@ -1,0 +1,13 @@
+[
+  {
+    "number": "PRB0042100",
+    "sys_id": "sys_prb0042100",
+    "short_description": "Recurring DB2 -904 resource unavailable during peak",
+    "description": "Known problem for DB2 resource unavailable affecting online transactions during month-end.",
+    "state": "Open",
+    "priority": "3 - Moderate",
+    "related_incidents": ["INC5668801"],
+    "workaround": "Increase DB2 thread pool; retry after 60s.",
+    "opened_at": "2026-09-15T00:00:00Z"
+  }
+]

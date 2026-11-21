@@ -1,0 +1,62 @@
+[
+  {
+    "rule_id": "DQ-CUST-001",
+    "name": "Customer ID Completeness",
+    "dataset": "CUSTOMER_MASTER",
+    "dimension": "completeness",
+    "threshold": 0.99,
+    "current_score": 0.985,
+    "status": "PASS",
+    "description": "CUST_ID must be non-null"
+  },
+  {
+    "rule_id": "DQ-CUST-002",
+    "name": "SSN Completeness",
+    "dataset": "CUSTOMER_MASTER",
+    "dimension": "completeness",
+    "threshold": 0.95,
+    "current_score": 0.91,
+    "status": "FAIL",
+    "description": "SSN null rate exceeded threshold"
+  },
+  {
+    "rule_id": "DQ-CUST-003",
+    "name": "SSN Format Accuracy",
+    "dataset": "CUSTOMER_MASTER",
+    "dimension": "accuracy",
+    "threshold": 0.98,
+    "current_score": 0.992,
+    "status": "PASS",
+    "description": "SSN must match NNN-NN-NNNN or 9 digits"
+  },
+  {
+    "rule_id": "DQ-CUST-004",
+    "name": "Customer Name Consistency",
+    "dataset": "CUSTOMER_MASTER",
+    "dimension": "consistency",
+    "threshold": 0.97,
+    "current_score": 0.975,
+    "status": "PASS",
+    "description": "Name casing and whitespace normalized"
+  },
+  {
+    "rule_id": "DQ-BATCH-PK-001",
+    "name": "PK Chunk Key Uniqueness",
+    "dataset": "CUST_EXTRACT_STAGING",
+    "dimension": "uniqueness",
+    "threshold": 1.0,
+    "current_score": 0.0,
+    "status": "FAIL",
+    "description": "PK chunk keys must be unique per extract window; failure correlates with PK Chunking ABEND on JOBCUST01"
+  },
+  {
+    "rule_id": "DQ-BATCH-PK-002",
+    "name": "Extract Timeliness",
+    "dataset": "CUST_EXTRACT_STAGING",
+    "dimension": "timeliness",
+    "threshold": 0.95,
+    "current_score": 0.40,
+    "status": "FAIL",
+    "description": "Extract must complete within SLA window"
+  }
+]

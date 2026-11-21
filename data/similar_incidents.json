@@ -1,0 +1,14 @@
+{
+  "INC5668817": [],
+  "INC5668801": [
+    {
+      "number": "INC5000100",
+      "short_description": "CICS latency after DB2 pool change",
+      "similarity": 0.72,
+      "state": "Resolved",
+      "resolution_summary": "Reverted DB2 thread pool change."
+    }
+  ],
+  "INC5668790": [],
+  "INC5668700": []
+}

@@ -1,0 +1,24 @@
+{
+  "CUSTEXT.cbl": {
+    "program": "CUSTEXT",
+    "member": "CUSTEXT",
+    "library": "PROD.COBOL.SOURCE",
+    "language": "COBOL",
+    "source": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. CUSTEXT.\n       ENVIRONMENT DIVISION.\n       DATA DIVISION.\n       WORKING-STORAGE SECTION.\n       01  WS-PK-CHUNKING-FLAG    PIC X(01) VALUE 'Y'.\n       01  WS-CHUNK-SIZE          PIC 9(08) VALUE 50000.\n       01  WS-CUST-REC.\n           05  WS-CUST-ID         PIC X(10).\n           05  WS-CUST-NAME       PIC X(40).\n           05  WS-SSN             PIC X(09).\n       PROCEDURE DIVISION.\n       MAIN-PARA.\n           IF WS-PK-CHUNKING-FLAG = 'Y'\n              PERFORM PK-CHUNK-EXTRACT\n           ELSE\n              PERFORM FULL-TABLE-EXTRACT\n           END-IF.\n           GOBACK.\n       PK-CHUNK-EXTRACT.\n           DISPLAY 'PK CHUNKING ENABLED SIZE=' WS-CHUNK-SIZE.\n           * Informatica session expects chunk keys\n           PERFORM UNTIL WS-DONE = 'Y'\n              CALL 'INFAPK' USING WS-CHUNK-SIZE\n           END-PERFORM.\n       FULL-TABLE-EXTRACT.\n           DISPLAY 'FULL EXTRACT MODE'.\n           CALL 'INFAEXT' USING WS-CUST-REC.\n",
+    "dependencies": ["INFAPK", "INFAEXT"],
+    "last_changed": "2026-08-12T00:00:00Z"
+  },
+  "PAYTRN.cbl": {
+    "program": "PAYTRN",
+    "member": "PAYTRN",
+    "library": "PROD.COBOL.SOURCE",
+    "language": "COBOL",
+    "source": "       IDENTIFICATION DIVISION.\n       PROGRAM-ID. PAYTRN.\n       PROCEDURE DIVISION.\n       MAIN.\n           EXEC CICS READ FILE('PAYFILE') INTO(WS-PAY) END-EXEC.\n           EXEC CICS RETURN END-EXEC.\n",
+    "dependencies": ["PAYFILE"],
+    "last_changed": "2026-01-05T00:00:00Z"
+  },
+  "jcl": {
+    "JOBCUST01": "//JOBCUST01 JOB (ACCT),'CUST EXTRACT',CLASS=A,MSGCLASS=X\n//* PK CHUNKING NIGHTLY EXTRACT\n//EXTRACT EXEC PGM=CUSTEXT\n//STEPLIB  DD DSN=PROD.LOADLIB,DISP=SHR\n//* SET PKCHUNK=Y TO ENABLE; N TO DISABLE PER SOP-BATCH-PKCHUNK-001\n//SYSIN    DD *\nPKCHUNK=Y\nCHUNKSIZE=50000\n/*\n//SYSOUT   DD SYSOUT=*\n",
+    "JOBACCT02": "//JOBACCT02 JOB (ACCT),'ACCT POST',CLASS=B,MSGCLASS=X\n//STEP01 EXEC PGM=ACCTPOST\n//STEPLIB DD DSN=PROD.LOADLIB,DISP=SHR\n"
+  }
+}
